@@ -1,0 +1,41 @@
+{
+  "name": "@cognis-digital/skillsmith",
+  "version": "0.1.0",
+  "description": "Authoring toolkit for AI-agent skills: lint, validate, scaffold, and package skill directories.",
+  "type": "module",
+  "bin": {
+    "skillsmith": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test \"dist/test/*.test.js\"",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "skills",
+    "ai-agents",
+    "lint",
+    "frontmatter",
+    "cli",
+    "authoring"
+  ],
+  "author": "Cognis Digital",
+  "maintainers": [
+    "Cognis Digital"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.11.0"
+  }
+}
