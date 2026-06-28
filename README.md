@@ -15,6 +15,33 @@ carrying at minimum a `name` and a `description`, plus optional metadata such as
 It is written in TypeScript, compiles to ESM with `tsc`, and has **zero runtime
 dependencies** (the YAML-frontmatter reader is implemented in-house).
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+  "tools": [
+    {
+      "name": "Hammer",
+      "category": "Hand Tools",
+      "skill_level": 3,
+      "description": "A versatile hammer for general-purpose use."
+    },
+    {
+      "name": "Drill Press",
+      "category": "Power Tools",
+      "skill_level": 5,
+      "description": "A precise drill press for heavy-duty projects."
+    }
+  ]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Install / build
 
 Requires Node.js >= 20.
