@@ -162,13 +162,47 @@ The package also exports a small, reusable library (see `src/index.ts`):
   `name`/`description`, semver-ish `version` (warning), `tags` shape (warning).
 - Structure validation: locates the primary instruction file
   (`SKILL.md`/`skill.md`/`README.md` or a single `*.md`), flags empty bodies.
-- Broken local-link detection (skips external URLs, `mailto:`, and anchors).
+- Broken local-link detection (skips external URLs, `mailto:`, anchors, and
+  bracket/paren sequences inside code fences and inline code).
+- Recursive linting (`lint <root> --recursive`) to validate a whole catalog and
+  gate CI on the aggregate result.
+- `forge`: generate a 600+ skill catalog self-taught from the host's own tools.
 - Versioned package manifest with per-file content hashes and a stable
   package-level integrity digest.
 - Skill scaffolding with a section skeleton and valid frontmatter.
 - Skill discovery and tabular/JSON listing.
 - Tests with Node's built-in `node:test`, run over the compiled
   `dist/test/*.test.js`.
+
+## Forge — a self-taught command-skill catalog
+
+`skillsmith` ships **[`forge`](forge/forge.py)**, a zero-dependency generator that
+produces a large catalog of *immense, valuable* skills that teach an agent how to
+program real commands — **604 skills** out of the box across six domains:
+
+| Domain | What it teaches |
+|---|---|
+| `python` | every importable standard-library module |
+| `python-builtin` | the built-in functions & types |
+| `python-recipe` | idioms: comprehensions, generators, context managers, dataclasses, async, typing… |
+| `bash` | shell/CLI commands |
+| `git` | git subcommands |
+| `pattern` | command-structuring patterns: pipes, redirection, traps, strict-mode… |
+
+Every skill is **self-taught**: the forge introspects the *actual tool on the host*
+— `pydoc` for Python, `<cmd> --help`/`man` for CLI — so the content is grounded in
+installed reality, not invented. Each is a standalone teaching document (overview,
+when-to-use, worked examples, how to structure it in a program, pitfalls, and the
+tool's own full reference), and **every one passes `skillsmith lint`**.
+
+```bash
+python -m forge.forge                  # forge the whole catalog into skills/
+skillsmith lint skills --recursive     # validate all 604 at once (CI gate)
+skillsmith list skills --recursive     # browse them
+```
+
+See **[CATALOG.md](CATALOG.md)** for the full breakdown. The `lint --recursive`
+flag validates an entire catalog and exits non-zero on any failure — a ready CI gate.
 
 ## Examples
 

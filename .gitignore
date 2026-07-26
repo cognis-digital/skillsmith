@@ -18,3 +18,7 @@ npm-debug.log*
 *.tgz
 .npm/
 coverage/
+
+# Python bytecode
+__pycache__/
+*.pyc

@@ -150,11 +150,24 @@ export interface LocalLink {
 }
 
 /** Extract local (non-URL, non-anchor) markdown links from body text. */
+/**
+ * Remove fenced code blocks and inline code spans so their contents are not
+ * scanned for markdown links. Bracket/paren sequences inside code (e.g. a shell
+ * `--help` excerpt or a type signature like `Mapping[KT, VT]`) are not links.
+ * Replaced with blank lines/spaces to preserve line numbers.
+ */
+function stripCode(body: string): string {
+  return body
+    .replace(/```[\s\S]*?```/g, (block) => block.replace(/[^\n]/g, " "))
+    .replace(/`[^`\n]*`/g, (span) => " ".repeat(span.length));
+}
+
 export function extractLocalLinks(body: string): LocalLink[] {
   const links: LocalLink[] = [];
   const re = /\[([^\]]*)\]\(([^)]+)\)/g;
   let m: RegExpExecArray | null;
-  while ((m = re.exec(body)) !== null) {
+  const scannable = stripCode(body);
+  while ((m = re.exec(scannable)) !== null) {
     const target = m[2].trim();
     // Skip external URLs, protocol-relative, mailto, and pure anchors.
     if (

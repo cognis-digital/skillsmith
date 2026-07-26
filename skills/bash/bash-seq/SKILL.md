@@ -1,0 +1,86 @@
+---
+name: bash-seq
+description: "Program the seq command: Print a sequence of numbers."
+version: 1.0.0
+tags: [bash, cli, command-line, numbers]
+---
+
+    # Command: `seq`
+
+    ## Overview
+
+    Print a sequence of numbers.
+
+    ## When to use
+
+    Use `seq` when your task matches what it does best (see Overview). In a
+    script, prefer it over hand-rolled logic — these tools are battle-tested,
+    fast, and composable through pipes.
+
+    ## Worked examples
+
+    ```bash
+seq 1 10
+```
+```bash
+seq 0 2 20
+```
+```bash
+seq -w 1 100
+```
+
+    ## Structuring it in a program
+
+    `seq` is a building block in a shell pipeline. Compose it with `|`, guard on
+    its **exit code**, and quote your variables:
+
+    ```bash
+    set -euo pipefail
+    if seq ... ; then
+        echo "ok"
+    else
+        echo "seq failed with exit $?" >&2
+        exit 1
+    fi
+    ```
+
+    - Chain with `|` to pass output to the next stage.
+    - Check `$?` (or use `set -e`) — a non-zero exit means failure.
+    - Quote `"$variables"` to survive spaces and globs.
+
+    ## Full reference (`seq --help` on this machine)
+
+```
+Usage: seq [OPTION]... LAST
+  or:  seq [OPTION]... FIRST LAST
+  or:  seq [OPTION]... FIRST INCREMENT LAST
+Print numbers from FIRST to LAST, in steps of INCREMENT.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -f, --format=FORMAT      use printf style floating-point FORMAT
+  -s, --separator=STRING   use STRING to separate numbers (default: \n)
+  -w, --equal-width        equalize width by padding with leading zeroes
+      --help     display this help and exit
+      --version  output version information and exit
+
+If FIRST or INCREMENT is omitted, it defaults to 1.  That is, an
+omitted INCREMENT defaults to 1 even when LAST is smaller than FIRST.
+The sequence of numbers ends when the sum of the current number and
+INCREMENT would become greater than LAST.
+FIRST, INCREMENT, and LAST are interpreted as floating point values.
+INCREMENT is usually positive if FIRST is smaller than LAST, and
+INCREMENT is usually negative if FIRST is greater than LAST.
+INCREMENT must not be 0; none of FIRST, INCREMENT and LAST may be NaN.
+FORMAT must be suitable for printing one argument of type 'double';
+it defaults to %.PRECf if FIRST, INCREMENT, and LAST are all fixed point
+decimal numbers with maximum precision PREC, and to %g otherwise.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/seq>
+or available locally via: info '(coreutils) seq invocation'
+```
+
+    ## Related
+
+    `yes`, `for`

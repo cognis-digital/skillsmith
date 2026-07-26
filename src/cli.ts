@@ -91,6 +91,40 @@ function cmdLint(positionals: string[], flags: Record<string, string | boolean>)
     return 2;
   }
   const strict = Boolean(flags["strict"]);
+
+  // --recursive: lint every skill discovered under <target> and aggregate.
+  if (flags["recursive"]) {
+    const skills = discoverSkills(target, true);
+    if (skills.length === 0) {
+      process.stderr.write(`${PROG} lint: no skills found under "${target}"\n`);
+      return 2;
+    }
+    let errors = 0;
+    let warnings = 0;
+    let failed = 0;
+    for (const s of skills) {
+      const r = lintSkill(s.dir);
+      errors += r.errorCount;
+      warnings += r.warningCount;
+      const bad = r.errorCount > 0 || (strict && r.warningCount > 0);
+      if (bad) {
+        failed++;
+        process.stdout.write(`${r.filePath ?? s.dir}\n`);
+        for (const d of r.diagnostics) {
+          const tag = d.level === "error" ? "error" : "warn ";
+          process.stdout.write(`  ${tag} [${d.rule}] ${d.message}\n`);
+        }
+      }
+    }
+    process.stdout.write(
+      `\n${skills.length} skill(s): ${skills.length - failed} ok, ${failed} failed — ` +
+        `${errors} error(s), ${warnings} warning(s)\n`,
+    );
+    if (errors > 0) return 1;
+    if (strict && warnings > 0) return 1;
+    return 0;
+  }
+
   const report = lintSkill(target);
 
   const header = report.filePath ?? target;

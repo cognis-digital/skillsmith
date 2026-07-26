@@ -68,3 +68,20 @@ Also [site](https://example.com) and [top](#section) and [mail](mailto:a@b.c).
     ["./other.md", "docs/guide.md"],
   );
 });
+
+test("ignores bracket/paren sequences inside code fences and spans", () => {
+  // A shell --help excerpt and a type signature inside code must NOT be read as links.
+  const body = [
+    "Real link: [doc](./doc.md)",
+    "```",
+    "chmod [ugo][+-=][rwxXst]*(perm) file",
+    "def get(mapping: Mapping[KT, VT], key: KT) -> VT: ...",
+    "```",
+    "Inline `arr[i](x)` is code too.",
+  ].join("\n");
+  const links = extractLocalLinks(body);
+  assert.deepEqual(
+    links.map((l) => l.target),
+    ["./doc.md"],
+  );
+});

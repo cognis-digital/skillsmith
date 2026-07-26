@@ -1,0 +1,286 @@
+---
+name: python-enum
+description: "Program with Python's enum module: The Python standard-library module `enum`."
+version: 1.0.0
+tags: [enum, programming, python, stdlib]
+---
+
+# Python: `enum`
+
+## Overview
+
+`enum` is part of the Python standard library.
+
+## When to use
+
+Reach for `enum` when your task calls for The Python standard-library module `enum`. It ships with Python — no dependency to install, available on every interpreter.
+
+## Import
+
+```python
+import enum
+```
+
+## Key functions
+
+- `enum.bin(num, max_bits=None)`
+- `enum.global_enum(cls, update_str=False)`
+- `enum.global_enum_repr(self)`
+- `enum.global_flag_repr(self)`
+- `enum.global_str(self)`
+- `enum.pickle_by_enum_name(self, proto)`
+- `enum.pickle_by_global_name(self, proto)`
+- `enum.show_flag_values(value)`
+- `enum.unique(enumeration)`
+
+## Key classes
+
+`DynamicClassAttribute`, `Enum`, `EnumCheck`, `EnumDict`, `EnumMeta`, `EnumType`, `Flag`, `FlagBoundary`, `IntEnum`, `IntFlag`, `MappingProxyType`, `ReprEnum`, `StrEnum`, `auto`, `member`, `nonmember`, `property`, `verify`
+
+## Constants / attributes
+
+`CONFORM`, `CONTINUOUS`, `EJECT`, `KEEP`, `NAMED_FLAGS`, `STRICT`, `UNIQUE`
+
+## Structuring it in a program
+
+Import once at the top of the module, then call into it where you need it. A
+robust pattern wraps the call, handles the errors the module can raise, and
+keeps the interface small:
+
+```python
+import enum
+
+def do_work(...):
+    """Use enum to accomplish one well-defined task."""
+    result = enum.bin(...)
+    return result
+```
+
+- Read the reference below for the exact signatures and exceptions.
+- Prefer the highest-level function that does the job; drop to lower-level
+  primitives only when you need the control.
+- Keep `enum` calls behind a small function so the rest of your code does not
+  depend on its details.
+
+## Full reference (introspected from this machine)
+
+```
+Python Library Documentation: module enum
+
+NAME
+    enum
+
+MODULE REFERENCE
+    https://docs.python.org/3.14/library/enum.html
+
+    The following documentation is automatically generated from the Python
+    source files.  It may be incomplete, incorrect or include features that
+    are considered implementation detail and may vary between Python
+    implementations.  When in doubt, consult the module reference at the
+    location listed above.
+
+CLASSES
+    builtins.dict(builtins.object)
+        EnumDict
+    builtins.int(builtins.object)
+        IntEnum(builtins.int, ReprEnum)
+        IntFlag(builtins.int, ReprEnum, Flag)
+    builtins.object
+        Enum
+            Flag
+            ReprEnum
+                IntEnum(builtins.int, ReprEnum)
+                IntFlag(builtins.int, ReprEnum, Flag)
+                StrEnum(builtins.str, ReprEnum)
+                    EnumCheck
+                    FlagBoundary
+        auto
+        member
+        nonmember
+        verify
+    builtins.str(builtins.object)
+        StrEnum(builtins.str, ReprEnum)
+            EnumCheck
+            FlagBoundary
+    builtins.type(builtins.object)
+        EnumType
+    types.DynamicClassAttribute(builtins.object)
+        property
+
+    class Enum(builtins.object)
+     |  Enum(
+     |      new_class_name,
+     |      /,
+     |      names,
+     |      *,
+     |      module=None,
+     |      qualname=None,
+     |      type=None,
+     |      start=1,
+     |      boundary=None
+     |  )
+     |
+     |  Create a collection of name/value pairs.
+     |
+     |  Example enumeration:
+     |
+     |  >>> class Color(Enum):
+     |  ...     RED = 1
+     |  ...     BLUE = 2
+     |  ...     GREEN = 3
+     |
+     |  Access them by:
+     |
+     |  - attribute access:
+     |
+     |    >>> Color.RED
+     |    <Color.RED: 1>
+     |
+     |  - value lookup:
+     |
+     |    >>> Color(1)
+     |    <Color.RED: 1>
+     |
+     |  - name lookup:
+     |
+     |    >>> Color['RED']
+     |    <Color.RED: 1>
+     |
+     |  Enumerations can be iterated over, and know how many members they have:
+     |
+     |  >>> len(Color)
+     |  3
+     |
+     |  >>> list(Color)
+     |  [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+     |
+     |  Methods can be added to enumerations, and members can have their own
+     |  attributes -- see the documentation for details.
+     |
+     |  Static methods defined here:
+     |
+     |  __new__(cls, value)
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  name
+     |      The name of the Enum member.
+     |
+     |  value
+     |      The value of the Enum member.
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from EnumType:
+     |
+     |  __contains__(value)
+     |      Return True if `value` is in `cls`.
+     |
+     |      `value` is in `cls` if:
+     |      1) `value` is a member of `cls`, or
+     |      2) `value` is the value of one of the `cls`'s members.
+     |      3) `value` is a pseudo-member (flags)
+     |
+     |  __getitem__(name)
+     |      Return the member matching `name`.
+     |
+     |  __iter__()
+     |      Return members in definition order.
+     |
+     |  __len__()
+     |      Return the number of members (no aliases)
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from EnumType:
+     |
+     |  __members__
+     |      Returns a mapping of member name->value.
+     |
+     |      This mapping lists all enum members, including aliases. Note that this
+     |      is a read-only view of the internal mapping.
+
+    class EnumCheck(StrEnum)
+     |  EnumCheck(*values)
+     |
+     |  various conditions to check an enumeration for
+     |
+     |  Method resolution order:
+     |      EnumCheck
+     |      StrEnum
+     |      builtins.str
+     |      ReprEnum
+     |      Enum
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __format__(self, format_spec, /) from builtins.str
+     |      Return a formatted version of the string as described by format_spec.
+     |
+     |  __new__(cls, value) from Enum
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  __str__(self, /) from builtins.str
+     |      Return str(self).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  CONTINUOUS = <EnumCheck.CONTINUOUS: 'no skipped integer values'>
+     |
+     |  NAMED_FLAGS = <EnumCheck.NAMED_FLAGS: 'multi-flag aliases may not cont...
+     |
+     |  UNIQUE = <EnumCheck.UNIQUE: 'one name per value'>
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from StrEnum:
+     |
+     |  __repr__(self) from Enum
+     |      Return repr(self).
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.str:
+     |
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |
+     |  __contains__(self, key, /)
+     |      Return bool(key in self).
+     |
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |
+     |  __ge__(self, value, /)
+     |      Return self>=value.
+     |
+     |  __getitem__(self, key, /)
+     |      Return self[key].
+     |
+     |  __getnewargs__(self, /)
+     |
+     |  __gt__(self, value, /)
+     |      Return self>value.
+     |
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |
+     |  __iter__(self, /)
+     |      Implement iter(self).
+     |
+     |  __le__(self, value, /)
+     |      Return self<=value.
+     |
+     |  __len__(self, /)
+     |      Return len(self).
+     |
+     |  __lt__(self, value, /)
+     |      Return self<value.
+     |
+     |  __mod__(self, value, /)
+     |      R
+```
+
+## Related
+
+Other standard-library modules pair well with `enum`; explore the `python` domain of this catalog.
